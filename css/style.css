@@ -19,6 +19,7 @@ main #tela {
     height: 150px;
 
     background-color: rgb(20, 20, 20);
+    color: white;
 }
 
 main #areaBotoes {
