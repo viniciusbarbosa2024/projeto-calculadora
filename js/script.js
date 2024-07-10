@@ -28,25 +28,33 @@ const main = {
     }
 }
 
-//Adicionando um listener em todos os botões de números
+//Adicionando listeners em todos os botões de números
 for (let pos in main.numero) {
     main.numero[pos].addEventListener('click',() => exibirNaTela(pos))
 }
 
-main.operadores.soma.addEventListener('click',exibirNaTela)
-main.operadores.subtracao.addEventListener('click',exibirNaTela)
-main.operadores.divisao.addEventListener('click',exibirNaTela)
-main.operadores.multiplicacao.addEventListener('click',exibirNaTela)
-main.operadores.porcentagem.addEventListener('click',exibirNaTela)
-main.operadores.inverterSinal.addEventListener('click',exibirNaTela)
-main.operadores.virgula.addEventListener('click',exibirNaTela)
+//Adicionando listeners nos botões de operação que vão ser exibidos na tela
+main.operadores.soma.addEventListener('click',() => exibirNaTela('+'))
+main.operadores.subtracao.addEventListener('click',() => exibirNaTela('-'))
+main.operadores.divisao.addEventListener('click',() => exibirNaTela('/'))
+main.operadores.multiplicacao.addEventListener('click',() => exibirNaTela('x'))
+main.operadores.porcentagem.addEventListener('click',() => exibirNaTela('%'))
+main.operadores.inverterSinal.addEventListener('click',() => exibirNaTela(''))
+main.operadores.virgula.addEventListener('click',() => exibirNaTela(','))
 
 
 function exibirNaTela(valor) {
-    if (main.tela.innerHTML == 0) {
+    // Esse if serve para verificar se o botão clicado foi um operador
+    if (isNaN(Number(valor))) { //Anotar sobre isNaN
+        main.tela.innerHTML += valor 
+    } else {
+        if (main.tela.innerHTML == 0) {
         main.tela.innerHTML = null
+        }
+    
+        main.tela.innerHTML += valor
     }
     
-    main.tela.innerHTML += valor
+    
 
 }
