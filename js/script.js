@@ -28,24 +28,36 @@ const main = {
     }
 }
 
+const guardarExpressao = [1]
+
 //Adicionando listeners em todos os botões de números
 for (let pos in main.numero) {
-    main.numero[pos].addEventListener('click',() => exibirNaTela(pos))
+    main.numero[pos].addEventListener('click',() => funcaoGeral(pos))
 }
 
 //Adicionando listeners nos botões de operação que vão ser exibidos na tela
-main.operadores.soma.addEventListener('click',() => exibirNaTela('+'))
-main.operadores.subtracao.addEventListener('click',() => exibirNaTela('-'))
-main.operadores.divisao.addEventListener('click',() => exibirNaTela('/'))
-main.operadores.multiplicacao.addEventListener('click',() => exibirNaTela('x'))
-main.operadores.porcentagem.addEventListener('click',() => exibirNaTela('%'))
-main.operadores.inverterSinal.addEventListener('click',() => exibirNaTela(''))
-main.operadores.virgula.addEventListener('click',() => exibirNaTela(','))
+main.operadores.soma.addEventListener('click',() => funcaoGeral('+'))
+main.operadores.subtracao.addEventListener('click',() => funcaoGeral('-'))
+main.operadores.divisao.addEventListener('click',() => funcaoGeral('/'))
+main.operadores.multiplicacao.addEventListener('click',() => funcaoGeral('x'))
+main.operadores.porcentagem.addEventListener('click',() => funcaoGeral('%'))
+main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
+main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 
+function verificarTipo(valor) { 
+//identifica se o parâmetro se refere a um número ou a um operador
+
+    if (isNaN(Number(valor))) {
+        return 'operador'
+    } else {
+        return 'numero'
+    }
+
+}
 
 function exibirNaTela(valor) {
     // Esse if serve para verificar se o botão clicado foi um operador
-    if (isNaN(Number(valor))) { //Anotar sobre isNaN
+    if (verificarTipo(valor) == 'operador') { //Anotar sobre isNaN
         main.tela.innerHTML += valor 
     } else {
         if (main.tela.innerHTML == 0) {
@@ -54,7 +66,18 @@ function exibirNaTela(valor) {
     
         main.tela.innerHTML += valor
     }
+
     
-    
+}
+
+
+function funcaoGeral(valor) {
+    guardarExpressao.push(valor)
+
+    exibirNaTela(valor)
 
 }
+
+
+
+
