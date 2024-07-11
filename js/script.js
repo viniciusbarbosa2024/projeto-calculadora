@@ -28,7 +28,7 @@ const main = {
     }
 }
 
-const guardarExpressao = []
+const guardarBotoesClicados = []
 
 //Adicionando listeners em todos os botões de números
 for (let pos in main.numero) {
@@ -44,19 +44,22 @@ main.operadores.porcentagem.addEventListener('click',() => funcaoGeral('%'))
 main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 
-function identificarNumeros(expressão) {
+function identificarExpressao(botoesClicados) {
     let formadorDeNumero = ''
-    let numerosDaExpressao = []
-    for (let pos in expressão) {
-        if (typeof expressão[pos] == 'number') {
-            formadorDeNumero += String(expressão[pos])
+    let expressão = []
+
+    //Análise da expressão e identificação dos números
+    for (let pos in botoesClicados) {
+        if (typeof botoesClicados[pos] == 'number') {
+            formadorDeNumero += String(botoesClicados[pos])
         } else {
-            numerosDaExpressao.push(formadorDeNumero)
+            expressão.push(Number(formadorDeNumero))
+            expressão.push(botoesClicados[pos])
             formadorDeNumero = ''    
         }
     }    
     
-    //Testar se a função está funcionando bem; fazer comentários de explicação
+    
 }
 
 function verificarTipo(valor) { 
@@ -89,19 +92,19 @@ function exibirNaTela(valor) {
 function funcaoGeral(valor) {
     //Diferenciando o tipo primitivo do 'valor' a depender se 'valor' se refere a um número(number) ou a um operador(string)
     if (verificarTipo(valor) == 'numero') {
-        guardarExpressao.push(Number(valor))    
+        guardarBotoesClicados.push(Number(valor))    
     } else {
-        guardarExpressao.push(valor)
+        guardarBotoesClicados.push(valor)
     }
     
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
-    if (typeof guardarExpressao[guardarExpressao.length-1] == 'string' && typeof guardarExpressao[guardarExpressao.length-2] == 'string') {
-        guardarExpressao.splice(guardarExpressao.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
+    if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
+        guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
         exibirNaTela(valor) 
     }
 
-    identificarNumeros(guardarExpressao)
+    identificarExpressao(guardarBotoesClicados)
 
 }
 
