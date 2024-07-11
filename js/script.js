@@ -28,7 +28,7 @@ const main = {
     }
 }
 
-const guardarExpressao = [1]
+const guardarExpressao = []
 
 //Adicionando listeners em todos os botões de números
 for (let pos in main.numero) {
@@ -72,9 +72,20 @@ function exibirNaTela(valor) {
 
 
 function funcaoGeral(valor) {
-    guardarExpressao.push(valor)
+    //Diferenciando o tipo primitivo do 'valor' a depender se 'valor' se refere a um número(number) ou a um operador(string)
+    if (verificarTipo(valor) == 'numero') {
+        guardarExpressao.push(Number(valor))    
+    } else {
+        guardarExpressao.push(valor)
+    }
+    
+    //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
+    if (typeof guardarExpressao[guardarExpressao.length-1] == 'string' && typeof guardarExpressao[guardarExpressao.length-2] == 'string') {
+        guardarExpressao.splice(guardarExpressao.length-1,1)       
+    } else {
+        exibirNaTela(valor) 
+    }
 
-    exibirNaTela(valor)
 
 }
 
