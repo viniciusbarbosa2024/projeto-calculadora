@@ -44,6 +44,21 @@ main.operadores.porcentagem.addEventListener('click',() => funcaoGeral('%'))
 main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 
+function identificarNumeros(expressão) {
+    let formadorDeNumero = ''
+    let numerosDaExpressao = []
+    for (let pos in expressão) {
+        if (typeof expressão[pos] == 'number') {
+            formadorDeNumero += String(expressão[pos])
+        } else {
+            numerosDaExpressao.push(formadorDeNumero)
+            formadorDeNumero = ''    
+        }
+    }    
+    
+    //Testar se a função está funcionando bem; fazer comentários de explicação
+}
+
 function verificarTipo(valor) { 
 //identifica se o parâmetro se refere a um número ou a um operador
 
@@ -81,11 +96,12 @@ function funcaoGeral(valor) {
     
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
     if (typeof guardarExpressao[guardarExpressao.length-1] == 'string' && typeof guardarExpressao[guardarExpressao.length-2] == 'string') {
-        guardarExpressao.splice(guardarExpressao.length-1,1)       
+        guardarExpressao.splice(guardarExpressao.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
         exibirNaTela(valor) 
     }
 
+    identificarNumeros(guardarExpressao)
 
 }
 
