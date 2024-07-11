@@ -35,7 +35,7 @@ for (let pos in main.numero) {
     main.numero[pos].addEventListener('click',() => funcaoGeral(pos))
 }
 
-//Adicionando listeners nos botões de operação que vão ser exibidos na tela
+//Adicionando listeners nos botões de operação
 main.operadores.soma.addEventListener('click',() => funcaoGeral('+'))
 main.operadores.subtracao.addEventListener('click',() => funcaoGeral('-'))
 main.operadores.divisao.addEventListener('click',() => funcaoGeral('/'))
@@ -43,12 +43,13 @@ main.operadores.multiplicacao.addEventListener('click',() => funcaoGeral('x'))
 main.operadores.porcentagem.addEventListener('click',() => funcaoGeral('%'))
 main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
+main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 
 function identificarExpressao(botoesClicados) {
     let formadorDeNumero = ''
     let expressão = []
 
-    //Análise da expressão e identificação dos números
+    //Análise da expressão / identificação dos números e dos operadores
     for (let pos in botoesClicados) {
         if (typeof botoesClicados[pos] == 'number') {
             formadorDeNumero += String(botoesClicados[pos])
@@ -101,7 +102,12 @@ function funcaoGeral(valor) {
     if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
-        exibirNaTela(valor) 
+        if(valor == '=') {
+
+        } else {
+            exibirNaTela(valor) 
+        }
+         
     }
 
     identificarExpressao(guardarBotoesClicados)
