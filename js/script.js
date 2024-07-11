@@ -60,6 +60,11 @@ function identificarExpressao(botoesClicados) {
         }
     }    
     
+    //Retorna o array da expressão quando o botão igual é clicado
+    if (expressão[expressão.length - 1] == '=') {
+        expressão.splice(expressão.length - 1,1)
+        return expressão
+    }
     
 }
 
@@ -102,15 +107,18 @@ function funcaoGeral(valor) {
     if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
-        if(valor == '=') {
-
+        let expressao = identificarExpressao(guardarBotoesClicados)
+        //Exibe os botões clicados enquanto o botão '=' não é clicado
+        if (expressao == undefined) {
+            exibirNaTela(valor)
         } else {
-            exibirNaTela(valor) 
+            
         }
+        
          
     }
 
-    identificarExpressao(guardarBotoesClicados)
+    
 
 }
 
