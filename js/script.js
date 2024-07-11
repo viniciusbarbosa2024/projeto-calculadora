@@ -45,6 +45,22 @@ main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 
+
+
+function realizarOperação(expressão) {
+    const multiplicacao = (a,b) => a*b
+    const soma = (a,b) => a+b
+    
+    // Verificar se há operação de multiplicação + realizar a multiplicação
+    if (expressão.indexOf('x') != -1) {
+        expressão[expressão.indexOf('x') - 1] = multiplicacao(expressão[expressão.indexOf('x') - 1],expressão[expressão.indexOf('x') + 1])
+
+        expressão.splice(expressão.indexOf('x'),2)
+    }
+    
+    return expressão
+}
+
 function identificarExpressao(botoesClicados) {
     let formadorDeNumero = ''
     let expressão = []
@@ -71,7 +87,7 @@ function identificarExpressao(botoesClicados) {
 function verificarTipo(valor) { 
 //identifica se o parâmetro se refere a um número ou a um operador
 
-    if (isNaN(Number(valor))) {
+    if (isNaN(Number(valor))) { //Anotar sobre isNaN
         return 'operador'
     } else {
         return 'numero'
@@ -81,7 +97,7 @@ function verificarTipo(valor) {
 
 function exibirNaTela(valor) {
     // Esse if serve para verificar se o botão clicado foi um operador
-    if (verificarTipo(valor) == 'operador') { //Anotar sobre isNaN
+    if (verificarTipo(valor) == 'operador') { 
         main.tela.innerHTML += valor 
     } else {
         if (main.tela.innerHTML == 0) {
@@ -107,12 +123,18 @@ function funcaoGeral(valor) {
     if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
-        let expressao = identificarExpressao(guardarBotoesClicados)
+        let expressão = identificarExpressao(guardarBotoesClicados)
         //Exibe os botões clicados enquanto o botão '=' não é clicado
-        if (expressao == undefined) {
+        if (expressão == undefined) {
             exibirNaTela(valor)
         } else {
+            let resultadoDaOperação = realizarOperação(expressão)
             
+            while (resultadoDaOperação.length != 1) {
+                resultadoDaOperação = realizarOperação(resultadoDaOperação)
+            }
+
+            window.alert(resultadoDaOperação)
         }
         
          
