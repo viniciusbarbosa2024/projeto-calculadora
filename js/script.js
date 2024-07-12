@@ -49,16 +49,73 @@ main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 
 function realizarOperação(expressão) {
     const multiplicacao = (a,b) => a*b
+    const divisao = (a,b) => a/b
     const soma = (a,b) => a+b
+    const subtracao = (a,b) => a-b
     
-    // Verificar se há operação de multiplicação + realizar a multiplicação
-    if (expressão.indexOf('x') != -1) {
+    //Verifica se há operações de multiplicação e de divisão na mesma expressão
+    if (expressão.indexOf('x') != -1 && expressão.indexOf('/') != -1) {
+        //Se sim,faz as operações na ordem correta (da esquerda para a direita)
+        if (expressão.indexOf('x') < expressão.indexOf('/')) {
+            expressão[expressão.indexOf('x') - 1] = multiplicacao(expressão[expressão.indexOf('x') - 1],expressão[expressão.indexOf('x') + 1])
+
+            expressão.splice(expressão.indexOf('x'),2)
+
+            return expressão
+        } else {
+            expressão[expressão.indexOf('/') - 1] = divisao(expressão[expressão.indexOf('/') - 1],expressão[expressão.indexOf('/') + 1])
+
+            expressão.splice(expressão.indexOf('/'),2)
+
+            return expressão
+        }
+    //Esse caso só ocorre se houver alguma operação de multiplicação e nenhuma de divisão
+    } else if (expressão.indexOf('x') != -1) {
         expressão[expressão.indexOf('x') - 1] = multiplicacao(expressão[expressão.indexOf('x') - 1],expressão[expressão.indexOf('x') + 1])
 
         expressão.splice(expressão.indexOf('x'),2)
+
+        return expressão
+    //Esse caso só ocorre se houver alguma operação de divisão e nenhuma de multiplicação
+    } else if (expressão.indexOf('/') != -1) {
+        expressão[expressão.indexOf('/') - 1] = divisao(expressão[expressão.indexOf('/') - 1],expressão[expressão.indexOf('/') + 1])
+
+        expressão.splice(expressão.indexOf('/'),2)
+
+        return expressão
+    //Esse caso só ocorre se não houver operações de multiplicação/divisão e houver operações de soma e de subtração
+    } else if (expressão.indexOf('+') != -1 && expressão.indexOf('-')!= -1) {
+        if (expressão.indexOf('+') < expressão.indexOf('-')) {
+            expressão[expressão.indexOf('+') - 1] = soma(expressão[expressão.indexOf('+') - 1],expressão[expressão.indexOf('+') + 1])
+
+            expressão.splice(expressão.indexOf('+'),2)
+
+            return expressão
+        } else {
+            expressão[expressão.indexOf('-') - 1] = subtracao(expressão[expressão.indexOf('-') - 1],expressão[expressão.indexOf('-') + 1])
+
+            expressão.splice(expressão.indexOf('-'),2)
+
+            return expressão
+        }
+    //Esse caso só ocorre se não houver operações de multiplicação/divisão e houver apenas operações de soma
+    } else if (expressão.indexOf('+') != -1) {
+        expressão[expressão.indexOf('+') - 1] = soma(expressão[expressão.indexOf('+') - 1],expressão[expressão.indexOf('+') + 1])
+
+        expressão.splice(expressão.indexOf('+'),2)
+
+        return expressão
+    //Esse caso só ocorre se não houver operações de multiplicação/divisão e houver apenas operações de subtração
+    } else if (expressão.indexOf('-')!= -1) {
+        expressão[expressão.indexOf('-') - 1] = subtracao(expressão[expressão.indexOf('-') - 1],expressão[expressão.indexOf('-') + 1])
+
+        expressão.splice(expressão.indexOf('-'),2)
+
+        return expressão
     }
+
     
-    return expressão
+    
 }
 
 function identificarExpressao(botoesClicados) {
