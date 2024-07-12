@@ -152,29 +152,31 @@ function verificarTipo(valor) {
 
 }
 
-function exibirNaTela(valor) {
-    // Esse if serve para verificar se o botão clicado foi um operador
-    if (verificarTipo(valor) == 'operador') { 
-        main.tela.innerHTML += valor 
-    } else {
-        if (main.tela.innerHTML == 0) {
-        main.tela.innerHTML = null
-        }
-    
-        main.tela.innerHTML += valor
+function exibirNaTela() {
+    //Função para exibir os números e operadores na tela
+    main.tela.innerHTML = null
+    for (let pos in guardarBotoesClicados) {
+        main.tela.innerHTML += guardarBotoesClicados[pos]
     }
 
-    
 }
 
 
 function funcaoGeral(valor) {
-    //Diferenciando o tipo primitivo do 'valor' a depender se 'valor' se refere a um número(number) ou a um operador(string)
-    if (verificarTipo(valor) == 'numero') {
-        guardarBotoesClicados.push(Number(valor))    
-    } else {
+    // Considerar como primeiro botão clicado o número 0 caso haja o clique de um operador sem o clique de um número anteriormente
+    if (guardarBotoesClicados.length == 0 && verificarTipo(valor) == 'operador') {
+        guardarBotoesClicados.push(0)
         guardarBotoesClicados.push(valor)
+    } else {
+        //Diferenciando o tipo primitivo do 'valor' a depender se 'valor' se refere a um número(number) ou a um operador(string)
+        if (verificarTipo(valor) == 'numero') {
+            guardarBotoesClicados.push(Number(valor))    
+        } else {
+            guardarBotoesClicados.push(valor)
+        }
     }
+    
+    
     
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
     if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
@@ -183,7 +185,7 @@ function funcaoGeral(valor) {
         let expressão = identificarExpressao(guardarBotoesClicados)
         //Exibe os botões clicados enquanto o botão '=' não é clicado
         if (expressão == undefined) {
-            exibirNaTela(valor)
+            exibirNaTela()
         } else {
             let resultadoDaOperação = realizarOperação(expressão)
             
