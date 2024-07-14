@@ -44,7 +44,7 @@ main.operadores.porcentagem.addEventListener('click',() => funcaoGeral('%'))
 main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
-
+main.operadores.clear.addEventListener('click',() => funcaoGeral('clear'))
 
 
 function realizarOperação(expressão) {
@@ -155,7 +155,6 @@ function identificarExpressao(botoesClicados) {
             expressão[expressão.indexOf('%')] = "x"
         }
 
-        window.alert(expressão)
 
         expressão.splice(expressão.length - 1,1)
         return expressão
@@ -174,11 +173,11 @@ function verificarTipo(valor) {
 
 }
 
-function exibirNaTela() {
+function exibirNaTela(botoesClicados) {
     //Função para exibir os números e operadores na tela
     main.tela.innerHTML = null
-    for (let pos in guardarBotoesClicados) {
-        main.tela.innerHTML += guardarBotoesClicados[pos]
+    for (let pos in botoesClicados) {
+        main.tela.innerHTML += botoesClicados[pos]
     }
 
 }
@@ -199,7 +198,11 @@ function funcaoGeral(valor) {
     }
     
     
-    
+    if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'clear') {
+        guardarBotoesClicados.splice(0)
+        exibirNaTela(guardarBotoesClicados)
+    }
+
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
     if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
@@ -207,7 +210,7 @@ function funcaoGeral(valor) {
         let expressão = identificarExpressao(guardarBotoesClicados)
         //Exibe os botões clicados enquanto o botão '=' não é clicado
         if (expressão == undefined) {
-            exibirNaTela()
+            exibirNaTela(guardarBotoesClicados)
         } else {
             let resultadoDaOperação = realizarOperação(expressão)
             
