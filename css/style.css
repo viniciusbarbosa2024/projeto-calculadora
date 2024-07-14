@@ -47,3 +47,7 @@ main #areaBotoes .botao {
     border-radius: 20px;
     font-weight: bold;
 }
+
+main #areaBotoes #apagarCaractere img {
+    width: 25px;
+}

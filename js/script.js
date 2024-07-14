@@ -197,7 +197,7 @@ function funcaoGeral(valor) {
         }
     }
     
-    
+    //Apagar tudo
     if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'clear') {
         guardarBotoesClicados.splice(0)
         exibirNaTela(guardarBotoesClicados)
