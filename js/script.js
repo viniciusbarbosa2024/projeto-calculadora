@@ -121,28 +121,7 @@ function realizarOperação(expressão) {
 function identificarExpressao(botoesClicados) {
     let formadorDeNumero = ''
     let expressão = []
-    let numeroDeCasasAntesDaVirgula = 0
-    let numeroDeCasasDepoisDaVirgula = 0
     
-    //Verifica se há números decimais + Identifica quantas casas existem antes e após a vírgula no número decimal
-    if (botoesClicados.indexOf(',') != -1) {
-        let pos = botoesClicados.indexOf(',')
-        
-        //Identificar quantas casas há antes da vírgula
-        while (pos >= 0 && verificarTipo(botoesClicados[pos-1]) == 'numero') {
-            numeroDeCasasAntesDaVirgula ++
-            pos --
-        }
-
-        pos = botoesClicados.indexOf(',')
-
-        //Identificar quantas casas há após a vírgula
-        while (pos <= (botoesClicados.length - 1) && verificarTipo(botoesClicados[pos+1]) == 'numero') {
-            numeroDeCasasDepoisDaVirgula ++
-            pos ++
-        }
- 
-    }
     
     //Identificação dos números e dos operadores
     for (let pos in botoesClicados) {
@@ -155,33 +134,20 @@ function identificarExpressao(botoesClicados) {
         }
     }   
     
-    if (expressão.indexOf(',') != -1) {
-        function verificarSeONumeroDecimalFoiTotalmenteEscrito() {
-            let pos = expressão.indexOf(',')
-            if (pos == (expressão.length - 1)) {
-                return false
-            } else {
-                while (pos + 1 <= (expressão.length - 1)) {
-                    if (verificarTipo(expressão[pos+1]) == 'numero') {
-                        pos++
-                    } else {
-                        return true
-                    }
-                }
-            }
-            
-        }
-        
-        if (verificarSeONumeroDecimalFoiTotalmenteEscrito() == true) {
-            expressão[expressão.indexOf(',') - 1] = expressão[expressão.indexOf(',') - 1] + (expressão[expressão.indexOf(',') + 1])/(10**(numeroDeCasasDepoisDaVirgula))
-            //Falta remover a vírgula e o número após a vírgula
-            //Acho que vai ser desnecessário a váriavel numeroDeCasaAntesDaVírgula
-            //Tenho que fazer mais comentários nesse trecho do código
-        }
-    }
     
     //Retorna o array da expressão quando o botão igual é clicado
     if (expressão[expressão.length - 1] == '=') {
+        while (expressão.indexOf(',') != -1) {
+            let numeroAntesDaVirgula = expressão[expressão.indexOf(',') - 1]
+            let numeroDepoisDaVirgula = expressão[expressão.indexOf(',') + 1]
+            
+            expressão[expressão.indexOf(',')-1] = numeroAntesDaVirgula + numeroDepoisDaVirgula/10**(String(numeroDepoisDaVirgula).length)
+            //Anotar sobre o length só funcionar com String
+
+            expressão.splice(expressão.indexOf(','),2)
+        }
+
+
         expressão.splice(expressão.length - 1,1)
         return expressão
     }
@@ -249,6 +215,7 @@ function funcaoGeral(valor) {
     
 
 }
+
 
 
 
