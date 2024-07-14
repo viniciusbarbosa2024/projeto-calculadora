@@ -137,6 +137,7 @@ function identificarExpressao(botoesClicados) {
     
     //Retorna o array da expressão quando o botão igual é clicado
     if (expressão[expressão.length - 1] == '=') {
+        //Remover as vírgulas e colocar os números decimais no array da expressão
         while (expressão.indexOf(',') != -1) {
             let numeroAntesDaVirgula = expressão[expressão.indexOf(',') - 1]
             let numeroDepoisDaVirgula = expressão[expressão.indexOf(',') + 1]
@@ -147,6 +148,14 @@ function identificarExpressao(botoesClicados) {
             expressão.splice(expressão.indexOf(','),2)
         }
 
+        //Substituir o '%' pelo 'x' no vetor
+        while (expressão.indexOf('%') != -1) {
+            expressão[expressão.indexOf('%')-1] /= 100
+
+            expressão[expressão.indexOf('%')] = "x"
+        }
+
+        window.alert(expressão)
 
         expressão.splice(expressão.length - 1,1)
         return expressão
