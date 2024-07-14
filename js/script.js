@@ -22,7 +22,7 @@ const main = {
         subtracao: document.getElementById('subtracao'),
         multiplicacao: document.getElementById('multiplicacao'),
         divisao: document.getElementById('divisao'),
-        inverterSinal: document.getElementById('inverterSinal'),
+        parênteses: document.getElementById('parênteses'),
         virgula: document.getElementById('virgula'),
         igual: document.getElementById('igual')
     }
@@ -41,11 +41,11 @@ main.operadores.subtracao.addEventListener('click',() => funcaoGeral('-'))
 main.operadores.divisao.addEventListener('click',() => funcaoGeral('/'))
 main.operadores.multiplicacao.addEventListener('click',() => funcaoGeral('x'))
 main.operadores.porcentagem.addEventListener('click',() => funcaoGeral('%'))
-main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 main.operadores.clear.addEventListener('click',() => funcaoGeral('clear'))
 main.operadores.apagarCaractere.addEventListener('click',() => funcaoGeral('apagarCaractere'))
+main.operadores.parênteses.addEventListener('click',() => funcaoGeral('parênteses'))
 
 
 function realizarOperação(expressão) {
@@ -207,6 +207,10 @@ function funcaoGeral(valor) {
     if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'apagarCaractere') {
         //Remove o último(apagarCaractere) e o penúltimo valor do array
         guardarBotoesClicados.splice(guardarBotoesClicados.length-2)
+    } 
+
+    if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'parênteses') {
+        //Terminar de configurar parênteses
     }
 
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
