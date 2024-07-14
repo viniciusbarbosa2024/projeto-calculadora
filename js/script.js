@@ -45,6 +45,7 @@ main.operadores.inverterSinal.addEventListener('click',() => funcaoGeral(''))
 main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 main.operadores.clear.addEventListener('click',() => funcaoGeral('clear'))
+main.operadores.apagarCaractere.addEventListener('click',() => funcaoGeral('apagarCaractere'))
 
 
 function realizarOperação(expressão) {
@@ -201,6 +202,11 @@ function funcaoGeral(valor) {
     if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'clear') {
         guardarBotoesClicados.splice(0)
         exibirNaTela(guardarBotoesClicados)
+    }
+
+    if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'apagarCaractere') {
+        //Remove o último(apagarCaractere) e o penúltimo valor do array
+        guardarBotoesClicados.splice(guardarBotoesClicados.length-2)
     }
 
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
