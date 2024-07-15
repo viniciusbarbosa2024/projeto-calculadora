@@ -48,6 +48,11 @@ main #areaBotoes .botao {
     font-weight: bold;
 }
 
+main #areaBotoes #null {
+    background-color: black;
+    border: 0px;
+}
+
 main #areaBotoes #apagarCaractere img {
     width: 25px;
 }

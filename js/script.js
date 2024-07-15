@@ -22,7 +22,6 @@ const main = {
         subtracao: document.getElementById('subtracao'),
         multiplicacao: document.getElementById('multiplicacao'),
         divisao: document.getElementById('divisao'),
-        parênteses: document.getElementById('parênteses'),
         virgula: document.getElementById('virgula'),
         igual: document.getElementById('igual')
     }
@@ -45,7 +44,6 @@ main.operadores.virgula.addEventListener('click',() => funcaoGeral(','))
 main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 main.operadores.clear.addEventListener('click',() => funcaoGeral('clear'))
 main.operadores.apagarCaractere.addEventListener('click',() => funcaoGeral('apagarCaractere'))
-main.operadores.parênteses.addEventListener('click',() => funcaoGeral('parênteses'))
 
 
 function realizarOperação(expressão) {
@@ -210,9 +208,6 @@ function funcaoGeral(valor) {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-2)
     } 
 
-    if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'parênteses') {
-        //Terminar de configurar parênteses
-    }
 
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
     if (verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-1]) == 'operador' && verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-2]) == 'operador') {
