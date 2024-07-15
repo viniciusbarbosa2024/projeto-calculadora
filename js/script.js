@@ -224,7 +224,7 @@ function funcaoGeral(valor) {
                 resultadoDaOperação = realizarOperação(resultadoDaOperação)
             }
 
-            window.alert(resultadoDaOperação)
+            main.tela.innerHTML = resultadoDaOperação
         }
         
          
