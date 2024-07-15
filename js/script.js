@@ -142,7 +142,7 @@ function identificarExpressao(botoesClicados) {
             let numeroDepoisDaVirgula = expressão[expressão.indexOf(',') + 1]
             
             expressão[expressão.indexOf(',')-1] = numeroAntesDaVirgula + numeroDepoisDaVirgula/10**(String(numeroDepoisDaVirgula).length)
-            //Anotar sobre o length só funcionar com String
+            
 
             expressão.splice(expressão.indexOf(','),2)
         }
@@ -164,7 +164,7 @@ function identificarExpressao(botoesClicados) {
 function verificarTipo(valor) { 
 //identifica se o parâmetro se refere a um número ou a um operador
 
-    if (isNaN(Number(valor))) { //Anotar sobre isNaN
+    if (isNaN(Number(valor))) { 
         return 'operador'
     } else {
         return 'numero'
