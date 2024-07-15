@@ -28,7 +28,8 @@ main #tela {
 main #areaBotoes {
     display: flex;
     flex-wrap: wrap;
-    gap: calc((100vh - 405px)/4) ;
+    row-gap: calc((100vh - 405px)/4);
+    column-gap: 45px;
     justify-content: space-around;
 
     width: 100%;
