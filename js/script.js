@@ -204,6 +204,7 @@ function funcaoGeral(valor) {
         exibirNaTela(guardarBotoesClicados)
     }
 
+    //Apagar último caractere
     if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'apagarCaractere') {
         //Remove o último(apagarCaractere) e o penúltimo valor do array
         guardarBotoesClicados.splice(guardarBotoesClicados.length-2)
@@ -214,7 +215,7 @@ function funcaoGeral(valor) {
     }
 
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
-    if (typeof guardarBotoesClicados[guardarBotoesClicados.length-1] == 'string' && typeof guardarBotoesClicados[guardarBotoesClicados.length-2] == 'string') {
+    if (verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-1]) == 'operador' && verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-2]) == 'operador') {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
         let expressão = identificarExpressao(guardarBotoesClicados)
