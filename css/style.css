@@ -6,9 +6,16 @@
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    
+    background-color: black;
+}
+
 
 main {
-    width: 100%;
+    max-width: 500px;
     height: 100%;
     
     background-color: black;
@@ -50,6 +57,7 @@ main #areaBotoes .botao {
     border: 1px solid white;
     border-radius: 20px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 main #areaBotoes .botao:hover {
