@@ -23,7 +23,7 @@ const main = {
         multiplicacao: document.getElementById('multiplicacao'),
         divisao: document.getElementById('divisao'),
         virgula: document.getElementById('virgula'),
-        igual: document.getElementById('igual')
+        igual: document.getElementById('igual'),
     }
 }
 
@@ -45,121 +45,30 @@ main.operadores.igual.addEventListener('click',() => funcaoGeral('='))
 main.operadores.clear.addEventListener('click',() => funcaoGeral('clear'))
 main.operadores.apagarCaractere.addEventListener('click',() => funcaoGeral('apagarCaractere'))
 
-
-function realizarOperação(expressão) {
-    const multiplicacao = (a,b) => a*b
-    const divisao = (a,b) => a/b
-    const soma = (a,b) => a+b
-    const subtracao = (a,b) => a-b
+function identificarExpressão(botoesClicados) {
+    let expressãoEmString = ''
     
-    //Verifica se há operações de multiplicação e de divisão na mesma expressão
-    if (expressão.indexOf('x') != -1 && expressão.indexOf('/') != -1) {
-        //Se sim,faz as operações na ordem correta (da esquerda para a direita)
-        if (expressão.indexOf('x') < expressão.indexOf('/')) {
-            expressão[expressão.indexOf('x') - 1] = multiplicacao(expressão[expressão.indexOf('x') - 1],expressão[expressão.indexOf('x') + 1])
-
-            expressão.splice(expressão.indexOf('x'),2)
-
-            return expressão
-        } else {
-            expressão[expressão.indexOf('/') - 1] = divisao(expressão[expressão.indexOf('/') - 1],expressão[expressão.indexOf('/') + 1])
-
-            expressão.splice(expressão.indexOf('/'),2)
-
-            return expressão
-        }
-    //Esse caso só ocorre se houver alguma operação de multiplicação e nenhuma de divisão
-    } else if (expressão.indexOf('x') != -1) {
-        expressão[expressão.indexOf('x') - 1] = multiplicacao(expressão[expressão.indexOf('x') - 1],expressão[expressão.indexOf('x') + 1])
-
-        expressão.splice(expressão.indexOf('x'),2)
-
-        return expressão
-    //Esse caso só ocorre se houver alguma operação de divisão e nenhuma de multiplicação
-    } else if (expressão.indexOf('/') != -1) {
-        expressão[expressão.indexOf('/') - 1] = divisao(expressão[expressão.indexOf('/') - 1],expressão[expressão.indexOf('/') + 1])
-
-        expressão.splice(expressão.indexOf('/'),2)
-
-        return expressão
-    //Esse caso só ocorre se não houver operações de multiplicação/divisão e houver operações de soma e de subtração
-    } else if (expressão.indexOf('+') != -1 && expressão.indexOf('-')!= -1) {
-        if (expressão.indexOf('+') < expressão.indexOf('-')) {
-            expressão[expressão.indexOf('+') - 1] = soma(expressão[expressão.indexOf('+') - 1],expressão[expressão.indexOf('+') + 1])
-
-            expressão.splice(expressão.indexOf('+'),2)
-
-            return expressão
-        } else {
-            expressão[expressão.indexOf('-') - 1] = subtracao(expressão[expressão.indexOf('-') - 1],expressão[expressão.indexOf('-') + 1])
-
-            expressão.splice(expressão.indexOf('-'),2)
-
-            return expressão
-        }
-    //Esse caso só ocorre se não houver operações de multiplicação/divisão e houver apenas operações de soma
-    } else if (expressão.indexOf('+') != -1) {
-        expressão[expressão.indexOf('+') - 1] = soma(expressão[expressão.indexOf('+') - 1],expressão[expressão.indexOf('+') + 1])
-
-        expressão.splice(expressão.indexOf('+'),2)
-
-        return expressão
-    //Esse caso só ocorre se não houver operações de multiplicação/divisão e houver apenas operações de subtração
-    } else if (expressão.indexOf('-')!= -1) {
-        expressão[expressão.indexOf('-') - 1] = subtracao(expressão[expressão.indexOf('-') - 1],expressão[expressão.indexOf('-') + 1])
-
-        expressão.splice(expressão.indexOf('-'),2)
-
-        return expressão
-    }
-
-    
-    
-}
-
-function identificarExpressao(botoesClicados) {
-    let formadorDeNumero = ''
-    let expressão = []
-    
-    
-    //Identificação dos números e dos operadores
     for (let pos in botoesClicados) {
-        if (typeof botoesClicados[pos] == 'number') {
-            formadorDeNumero += String(botoesClicados[pos])
-        } else {
-            expressão.push(Number(formadorDeNumero))
-            expressão.push(botoesClicados[pos])
-            formadorDeNumero = ''    
+        if (botoesClicados[pos] == 'x') {
+            botoesClicados[pos] = '*'
+        } else if (botoesClicados[pos] == ',') {
+            botoesClicados[pos] = '.'
+        } else if (botoesClicados[pos] == '%') {
+            botoesClicados[pos] = '/100*'
+        } else if (verificarTipo(botoesClicados[pos]) == 'numero') {
+            botoesClicados[pos] = String(botoesClicados[pos])
         }
-    }   
-    
-    
-    //Retorna o array da expressão quando o botão igual é clicado
-    if (expressão[expressão.length - 1] == '=') {
-        //Remover as vírgulas e colocar os números decimais no array da expressão
-        while (expressão.indexOf(',') != -1) {
-            let numeroAntesDaVirgula = expressão[expressão.indexOf(',') - 1]
-            let numeroDepoisDaVirgula = expressão[expressão.indexOf(',') + 1]
-            
-            expressão[expressão.indexOf(',')-1] = numeroAntesDaVirgula + numeroDepoisDaVirgula/10**(String(numeroDepoisDaVirgula).length)
-            
+         
 
-            expressão.splice(expressão.indexOf(','),2)
-        }
-
-        //Substituir o '%' pelo 'x' no vetor
-        while (expressão.indexOf('%') != -1) {
-            expressão[expressão.indexOf('%')-1] /= 100
-
-            expressão[expressão.indexOf('%')] = "x"
-        }
-
-
-        expressão.splice(expressão.length - 1,1)
-        return expressão
+        expressãoEmString += botoesClicados[pos]
     }
-    
+
+    return (expressãoEmString)
+
 }
+
+
+
 
 function verificarTipo(valor) { 
 //identifica se o parâmetro se refere a um número ou a um operador
@@ -213,22 +122,18 @@ function funcaoGeral(valor) {
     if (verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-1]) == 'operador' && verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-2]) == 'operador') {
         guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
     } else {
-        let expressão = identificarExpressao(guardarBotoesClicados)
-        //Exibe os botões clicados enquanto o botão '=' não é clicado
-        if (expressão == undefined) {
-            exibirNaTela(guardarBotoesClicados)
-        } else {
-            let resultadoDaOperação = realizarOperação(expressão)
-            
-            while (resultadoDaOperação.length != 1) {
-                resultadoDaOperação = realizarOperação(resultadoDaOperação)
-            }
-
-            main.tela.innerHTML = resultadoDaOperação
-        }
-        
-         
+        exibirNaTela(guardarBotoesClicados) 
     }
+
+    if (guardarBotoesClicados[guardarBotoesClicados.length-1] == '=') {
+        guardarBotoesClicados.splice(guardarBotoesClicados.length-1)
+        
+        let expressão = identificarExpressão(guardarBotoesClicados)
+
+        main.tela.innerHTML = eval(expressão)
+
+        guardarBotoesClicados.splice(0)
+    } 
 
     
 
