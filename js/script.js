@@ -108,19 +108,28 @@ function funcaoGeral(valor) {
     //Apagar tudo
     if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'clear') {
         guardarBotoesClicados.splice(0)
-        exibirNaTela(guardarBotoesClicados)
+        main.tela.innerHTML = 0
+        return
     }
 
     //Apagar último caractere
     if (guardarBotoesClicados[guardarBotoesClicados.length-1] == 'apagarCaractere') {
         //Remove o último(apagarCaractere) e o penúltimo valor do array
         guardarBotoesClicados.splice(guardarBotoesClicados.length-2)
+
+        //Evitar bug de o 0 aparecer como algarismo inicial após o uso do 'apagarCaractere'
+        if (guardarBotoesClicados.length == 1 && guardarBotoesClicados[0] == 0) {
+            guardarBotoesClicados.splice(0)
+            main.tela.innerHTML = 0
+            return
+        }
     } 
 
 
     //Condicional para impedir que um operador apareça mais de uma vez seguida na tela (++,---,// e etc.)
     if (verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-1]) == 'operador' && verificarTipo(guardarBotoesClicados[guardarBotoesClicados.length-2]) == 'operador') {
-        guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos       
+        guardarBotoesClicados.splice(guardarBotoesClicados.length-1,1) //impede que a expressão seja guardada com dois operadores seguidos
+        window.alert('formato inválido')       
     } else {
         exibirNaTela(guardarBotoesClicados) 
     }
@@ -130,7 +139,7 @@ function funcaoGeral(valor) {
         
         let expressão = identificarExpressão(guardarBotoesClicados)
 
-        main.tela.innerHTML = eval(expressão)
+        main.tela.innerHTML = parseFloat(eval(expressão).toFixed(10))
 
         guardarBotoesClicados.splice(0)
     } 
